@@ -9,33 +9,39 @@
 #include <string.h>
 #include <ctype.h>
 
-string one_word_initial(string word);
-
 int main(void)
 {
     string name = GetString();
-    string initials = "";
-    string word = "";
-    //Loop across the string to find 'words'
-    for (int i = 0; i < strlen(name); i++)
+    while (name != NULL)
     {
-        string character = name[i];
-        if (isblank(character) == FALSE)
+        int name_length = strlen(name);
+        string initials[name_length];
+        string word[name_length];
+        int word_length = -1;
+        int current_initial = -1;
+        //Loop across the string to find 'words'
+        for (int i = 0; i < name_length; i++)
         {
-            strcat(word, name[i];
+            // Find current character in name
+            char character = name[i];
+            // If character is not blank, word is a little longer
+            // and character is added to word
+            if (!isblank(character))
+            {
+                word_length = word_length + 1;
+                word[word_length] = character;
+            }
+            // Else, word is over
+            // add first initial of word to initials array
+            // reset word and its length
+            else
+            {
+                current_initial = current_initial + 1;
+                initials[current_initial] = toupper(word[0]);
+                word = "";
+                word_length = -1;
+            }
         }
-        else
-        {
-            strcat(initials, one_word_initial(word));
-            word = "";
-        }
+        printf("%s\n", initials);
     }
-    printf("%s\n", initials);
-}
-
-string one_word_initial(string word)
-{
-    string letter = word[0];
-    initial_of_choice = toupper(letter);
-    return initial_of_choice;
 }
