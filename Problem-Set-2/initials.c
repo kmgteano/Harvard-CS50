@@ -12,36 +12,30 @@
 int main(void)
 {
     string name = GetString();
-    while (name != NULL)
+    if (name != NULL)
     {
         int name_length = strlen(name);
-        string initials[name_length];
-        string word[name_length];
-        int word_length = -1;
-        int current_initial = -1;
+        char initials[name_length];
+        int current_initial = 0;
+		// First initial is always at index 0 of name
+		initials[current_initial] = (char) toupper( (int) name[0] ); 
         //Loop across the string to find 'words'
         for (int i = 0; i < name_length; i++)
         {
             // Find current character in name
             char character = name[i];
-            // If character is not blank, word is a little longer
-            // and character is added to word
-            if (!isblank(character))
+            // If character is blank, we found the start of another word
+            if (isblank(character))
             {
-                word_length = word_length + 1;
-                word[word_length] = character;
-            }
-            // Else, word is over
-            // add first initial of word to initials array
-            // reset word and its length
-            else
-            {
+				// The next initial is the character after the space.
                 current_initial = current_initial + 1;
-                initials[current_initial] = toupper(word[0]);
-                word = "";
-                word_length = -1;
+                initials[current_initial] = (char) toupper( (int) name[i + 1]);
             }
         }
         printf("%s\n", initials);
     }
+	else
+	{
+		printf("Null passed through getString. Aborting.");
+	}	
 }
