@@ -59,7 +59,7 @@ int main(int argc, string argv[])
             if (isupper(msg_int))
             {
                 // get ASCII value of cipher letter
-                //and add to ciphertext
+                // and add to ciphertext
                 int cip_int = ( (msg_int - 64 + key) % 26) + 64;
                 ciphertext[j] = (char) cip_int;
             }
