@@ -17,25 +17,33 @@ int main(void)
         int name_length = strlen(name);
         char initials[name_length];
         int current_initial = 0;
-		// First initial is always at index 0 of name
-		initials[current_initial] = (char) toupper( (int) name[0] ); 
-        //Loop across the string to find 'words'
+
+        // First initial is always at index 0 of name
+        initials[current_initial] = (char) toupper( (int) name[0] ); 
+
+        // Loop across the string to find 'words'
         for (int i = 0; i < name_length; i++)
         {
             // Find current character in name
             char character = name[i];
+
             // If character is blank, we found the start of another word
+            // The next initial is the character after the space.
             if (isblank(character))
             {
-				// The next initial is the character after the space.
                 current_initial = current_initial + 1;
                 initials[current_initial] = (char) toupper( (int) name[i + 1]);
             }
         }
+
+        // done with initials; set "last initial" to 0
+        initials[current_initial + 1] = (char) 0;
+
+        // print initials
         printf("%s\n", initials);
     }
 	else
-	{
-		printf("Null passed through getString. Aborting.");
+    {
+        printf("Null passed through getString. Aborting.");
 	}	
 }
