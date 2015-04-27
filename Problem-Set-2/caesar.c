@@ -15,18 +15,18 @@ int main(int argc, string argv[])
 {
     // Checking if the argument passed in is legitimate
     // if legitimate, calculate k.
-    
-    string argument = argv[1];
-    int arg_len = strlen(argument);
 
     // Too many arguments, throw error
     if (argc != 2)
     {
         printf("Incorrect number of arguments, aborting.\n");
         return 1;
-    }
+    }    
     else
     {
+        string argument = argv[1];
+        int arg_len = strlen(argument);   
+        
         // Check non-numerical argument
         for (int i = 0; i < arg_len; i++)
         {
@@ -42,13 +42,13 @@ int main(int argc, string argv[])
                 return 1;
             }
         }
-
+        
         int key = atoi(argument) % 26;
     
         // Get string from user
         string message = GetString();
         int msg_len = strlen(message);
-        string ciphertext = "";
+        char ciphertext[msg_len];
         
         for (int j = 0; j < msg_len; j++)
         {
@@ -82,4 +82,5 @@ int main(int argc, string argv[])
         ciphertext[msg_len] = (char) 0;
         printf("%s\n", ciphertext);
     }
+    
 }
