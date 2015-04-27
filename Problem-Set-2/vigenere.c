@@ -14,9 +14,7 @@
 int main(int argc, string argv[])
 {
     // Checking if the argument passed in is legitimate
-    
-    string argument = argv[1];
-    int arg_len = strlen(argument);
+
 
     // Too many arguments, throw error
     if (argc != 2)
@@ -26,6 +24,9 @@ int main(int argc, string argv[])
     }
     else
     {
+        string argument = argv[1];
+        int arg_len = strlen(argument);      
+
         for (int i = 0; i < arg_len; i++)
         {
             if (!isalpha(argument[i]))
@@ -50,22 +51,35 @@ int main(int argc, string argv[])
         string message = GetString();
         int msg_len = strlen(message);
         int key_index = 0;
-        string ciphertext = "";
+        char ciphertext[msg_len];
         
         for (int k = 0; k < msg_len; k++)
         {
+            char msg_char = message[k];
+            int msg_int = (int) msg_char;
             
             // Case 1: non-alphabetical. 
-            if (!isalpha(message[k]))
+            if (!isalpha(msg_char))
             {
-                ciphertext[k] = message[k];
+                ciphertext[k] = msg_char;
             }
             
             // Case 2: uppercase. 
-            else if (isupper(message[k]))
+            else if (isupper(msg_char))
             {
-                int cip_int = ( (msg_int - 64 + key_array[key_index]) % 26) + 64;
-                ciphertext[j] = (char) cip_int;
+                int cip_int = ((msg_int - 64 + key_array[key_index]) % 26) + 64;
+                
+                // An odd edge case: if the cipher would be 'Z', the modulo
+                // gives the character before 'A'
+                
+                if (cip_int == 64)
+                {
+                    ciphertext[k] = (char) (cip_int + 26);
+                }
+                else
+                {
+                    ciphertext[k] = (char) cip_int;
+                }
                 
                 // Advance index of key, but wrap if necessary. 
                 key_index = (key_index + 1) % key_len;
@@ -74,8 +88,16 @@ int main(int argc, string argv[])
             // Case 3: lowercase.
             else 
             {
-                int cip_int = ( (msg_int - 96 + key_array[key_index]) % 26) + 96;
-                ciphertext[j] = (char) cip_int;
+                int cip_int = ((msg_int - 96 + key_array[key_index]) % 26) + 96;
+                
+                if (cip_int == 96)
+                {
+                    ciphertext[k] = (char) (cip_int + 26);
+                }
+                else
+                {
+                    ciphertext[k] = (char) cip_int;
+                }
                 
                 key_index = (key_index + 1) % key_len;
             }
